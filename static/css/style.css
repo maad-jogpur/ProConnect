@@ -1,0 +1,43 @@
+body {
+    background-color: #f3f2ef;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+    height: 70px;
+}
+
+.job-item {
+    transition: all 0.2s ease;
+}
+
+.job-item:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #0a66c2;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #004182;
+}
+
+.auth-box {
+    width: 360px;
+}
+
+a {
+    text-decoration: none;
+    color: #0a66c2;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.bg-white {
+    background-color: #ffffff;
+}

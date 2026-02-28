@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:80vh;">
+    <div class="auth-box bg-white p-4 border">
+        <h4 class="fw-bold mb-3">Sign in</h4>
+        <p class="text-muted small">Stay updated on your professional world</p>
+
+        <form action="{%url 'login'%}" method="POST">
+            {%csrf_token%}
+            {%include 'alerts.html'%}
+            <div class="mb-3">
+                <label>Email Address</label>
+                <input type="email" name="email" class="form-control" placeholder="Email">
+            </div>
+            <div class="mb-3">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign in</button>
+        </form>
+
+        <div class="text-center mt-3 small">
+            New to ProConnect? <a href="{%url 'register_seeker' %}">Join now</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

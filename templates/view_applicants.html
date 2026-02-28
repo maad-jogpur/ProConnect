@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="card shadow-sm mb-4">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="mb-0">Applicants for: <strong>{{job.title}}</strong></h3>
+                <p class="text-muted mb-0">Total Applicants: {{count}}</p>
+            </div>
+            <a href="{%url 'recruiter_dashboard'%}" class="btn btn-outline-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">Candidate</th>
+                        <th>Email</th>
+                        <th>Experience</th>
+                        <th>Skills</th>
+                        <th>Resume</th>
+                        <th class="text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for application in applications %}
+                    <tr> 
+                        <td class="ps-4 py-3">
+                            <div class="d-flex align-items-center">
+                                {% if not application.user.profile.profile_photo %}
+                                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQArAMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABAUBAgYDB//EADgQAAICAQEFBQQIBgMAAAAAAAABAgMEEQUhMUFREhMyYXEiUnKxBiNCgZGhwdEUFVOCkuEkMzT/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAWEQEBAQAAAAAAAAAAAAAAAAAAEQH/2gAMAwEAAhEDEQA/APuIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGG0lq3oBkj5GXVQvrJb/dW9kDN2k23DGei5z/AGK1tttttt8WypVjdtab3VVpLrJ6sizzMmfG6S+HcRwWI3723+rZ/kzaORdF6xtmv7jyAEyraWTDe5KaXKSJ1G1Kp7rV3b666opQIrqYyUkmmmnwaMnN4+VbjS1req5xfBl3i5UMmGsHpJcYsyqSAAAAAAAAAAAAAw3oU20s12ydVT+rXF+9/olbVyu6p7uL9uf5IpfQIAA0gAQ8jPrqfZgu8lz04ICYCqe0rm90a16pv9Tevaj10trTXWISrIGlN1d8O1XJNc/I3ChvVZKqyM624yXTmaAiuiw8lZNSkt0l4l0JBzmHkPGuU/svdJeR0UZKSTi9U1qmRWQAAAAAAADD4GSPn2OrEskuOmi+8Cjy7u/yJz36N6L0PEA0yAACv2llOLdNb03e2/0Kw3tm7LJTfGTbNAjJgAD0otlRNShx6dS8qsjbXGyHCSOfLTZM265w92Wq+8CeAAoXeyLu3Q6299fD0KQmbJscMxR5STQ1V8ADKgAAAAAV+2XpixXWa+TLArttL/jw+P8ARgUwANMge9MADnZJqTT4p6MwTdpUd3c7I+Cb19GQggAABZbIi/rZct2hXJavRb5Pgi8xKO4pUOfGXqB7AAKHriPTKpa99fM8j0x//RV8cfmNHTAAy0AAAAABC2tDtYcn7rTJp53Vq2qcJcJLQDmQZkmm09zT00MGmQAAazhGyLjNJxfFFZfs6yG+p9tdHxRaSlGK1lJJee4jT2hjx+05fCgipdVkeNc1/az0rxL7HpGp+r3JFh/M6fdsH8ype59tfcBtiYcKPalpKfXkiUeVWTTb4JrXo9zPX1AAAKEjZ8e3mVLo9fw3kcstiVdqdlrW5LsoaLgAGWgAAAAAAAFJtbHddytXhnx8mQDpcmmN9Mq5cHz6HO3VSotdc/EvzKjQi5mbGj2YLtWfkjGfldwuzD/skvw8yo1b3ttvm2VltbbO6Xask2+mpoAAMmAAJmLnTq9mxucPPiiGAOhrnGyCnCWsXzNikw8l49nWD8SLpNOKaaafMauNknJpRWre5I6LDpWPjxr5rxepA2Tie1/EWLygv1LYyuAACgAAAAAAABFzMSOTXo/EvCyUAPnu08bIxcmayYtOT3Pk/QivcfRcvEozKnVkVqcX15ehy20fo3kUtzxJd9V7n2l+5qsxRAzOMq5OE4uM1xi1owEYABQMglYWzsvNa/h6m46+OW6P4kEXQ6jYGzLnTGeWnGvXWMHxfqS9lbAow2rL2rrl5ezH0LjQm6sEtFu4GQCNAAAAAAAAAAAAAAAAPHJxaMmPZyKYWLl2lroVl30b2fY/ZjZX8Ev31LkAc8/opjfZyb/vUf2N6/othxes7siflqkvkXwFSK7H2Ls/H8GNGT6z9r5lgklwMgKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//9k=" 
+                                         class="rounded-circle me-3" width="40" height="40" alt="Profile">
+                                {% else %}
+                                    <img src="{{application.user.profile.profile_photo.url}}" 
+                                         class="rounded-circle me-3" width="40" height="40" alt="Profile">
+                                {% endif %}
+                                <div>
+                                    <h6 class="mb-0">{{application.user.first_name}} {{application.user.last_name}}</h6>
+                                    <small class="text-muted">Applied 2 days ago</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="align-middle">{{application.user.email}}</td>
+                        <td class="align-middle">{{application.user.profile.experience}}</td>
+                        <td class="align-middle">{{application.user.profile.skills}}</td>
+                        <td class="align-middle">
+                            <a href="{{ application.resume.url }}" target="_blank" class="btn btn-outline-dark">
+                                <i class="fas fa-file-pdf me-1"></i> View Resume
+                            </a>
+                        </td>
+                        <td class="align-middle text-center">
+                            {% if application.status == 'Pending' %}
+                               <div class="d-flex gap-2 justify-content-center">
+                                    <a href="{% url 'select_applicant' application.id %}" class="btn btn-sm btn-success">
+                                        <i class="fas fa-check-circle me-1"></i> Selected
+                                    </a>
+                                
+                                    <a href="{% url 'reject_applicant' application.id %}" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-times-circle me-1"></i> Rejected
+                                    </a>
+                                </div>
+                            {% else %}
+                                <span class="badge {% if application.status == 'Selected' %}bg-success{% else %}bg-danger{% endif %} py-2 px-3">
+                                     <i class="fas {% if application.status == 'Rejected' %} fa-times-circle {% else %} fa-check-circle {% endif %}me-1"></i>{{ application.status }}
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock  %}

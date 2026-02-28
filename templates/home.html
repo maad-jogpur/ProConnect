@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="bg-light py-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 class="display-4 fw-bold text-dark mb-3">Find Your Next <span class="text-primary">Career Move</span></h1>
+                <p class="lead text-secondary mb-4">
+                    Connect with top companies and explore professional opportunities tailored to your skills.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'jobs' %}" class="btn btn-primary btn-lg px-4 shadow-sm">
+                        <i class="fas fa-search me-2"></i>Explore Jobs
+                    </a>
+                    {% if not user.is_authenticated %}
+                    <a href="{% url 'register_seeker' %}" class="btn btn-outline-dark btn-lg px-4">
+                        Join Now
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 mt-5 mt-md-0">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216"
+                         class="img-fluid rounded-3 shadow-lg" alt="Professional Connection">
+                    <div class="position-absolute bottom-0 start-0 bg-white p-3 rounded shadow-sm m-3 d-none d-lg-block">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-briefcase text-primary fa-2x me-3"></i>
+                            <div>
+                                <h6 class="mb-0 fw-bold">500+ Jobs</h6>
+                                <small class="text-muted">New roles added daily</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5 my-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Why Choose ProConnect?</h2>
+        <p class="text-muted">The best way to bridge the gap between talent and industry.</p>
+    </div>
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="p-4 rounded-3 border h-100 transition-hover">
+                <div class="icon-box bg-primary-light text-primary mb-3 mx-auto">
+                    <i class="fas fa-user-tie fa-2x"></i>
+                </div>
+                <h5 class="fw-bold">Easy Application</h5>
+                <p class="text-muted small">Apply to your dream jobs with just one click using your saved resume.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 rounded-3 border h-100 transition-hover">
+                <div class="icon-box bg-success-light text-success mb-3 mx-auto">
+                    <i class="fas fa-building fa-2x"></i>
+                </div>
+                <h5 class="fw-bold">Top Companies</h5>
+                <p class="text-muted small">Access exclusive job openings from verified recruiters across major cities.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 rounded-3 border h-100 transition-hover">
+                <div class="icon-box bg-info-light text-info mb-3 mx-auto">
+                    <i class="fas fa-chart-line fa-2x"></i>
+                </div>
+                <h5 class="fw-bold">Track Status</h5>
+                <p class="text-muted small">Monitor your application progress from "Pending" to "Selected" in real-time.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-primary-light { background-color: rgba(13, 110, 253, 0.1); }
+    .bg-success-light { background-color: rgba(25, 135, 84, 0.1); }
+    .bg-info-light { background-color: rgba(13, 202, 240, 0.1); }
+    .icon-box {
+        width: 70px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    .transition-hover:hover {
+        transform: translateY(-5px);
+        border-color: #0d6efd !important;
+        transition: all 0.3s ease;
+    }
+</style>
+
+{% endblock %}

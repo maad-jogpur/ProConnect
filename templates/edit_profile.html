@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h3 class="mb-4">Edit Profile</h3>
+        
+        {% if user.role == "Job Seeker" %}
+        <form action="{%url 'edit_profile_seeker'%}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+        {% else %}
+        <form action="{%url 'edit_profile_recruiter'%}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+        {% endif %}
+            
+
+            
+            <div class="col-md-6 mb-3">
+                <label>Profile Image</label>
+                {% if profile.profile_photo %}
+                    <div class="mb-2">
+                        <img src="{{ profile.profile_photo.url }}" alt="Profile Picture" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+                    </div>
+                {% endif %}
+                {{seeker_form.profile_photo}}
+                {{recruiter_form.profile_photo}}
+            </div>
+
+            {% if user.role == 'Job Seeker' %}
+                <div class="mb-3">
+                    <label>Skills</label>
+                    {{seeker_form.skills}}
+                </div>
+
+                <div class="mb-3">
+                    <label>Experience</label>
+                    {{seeker_form.experience}}
+                </div>
+            {% else %}
+                <div class="mb-3">
+                    <label>Company Name</label>
+                    {{recruiter_form.company_name}}
+                </div>
+
+                <div class="mb-3">
+                    <label>About Company </label>
+                    {{recruiter_form.company_description}}
+                </div>
+                
+            {% endif %}
+
+           
+
+            <button type="submit" class="btn btn-success">
+                Save Changes
+            </button>
+            
+
+            {% if user.role == 'Job Seeker' %}
+                <a href="{%url 'seeker_dashboard'%}" class="btn btn-secondary">
+                    Cancel
+                </a>
+            {% else %}
+                <a href="{%url 'recruiter_dashboard'%}" class="btn btn-secondary">
+                    Cancel
+                </a>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

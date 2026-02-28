@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:80vh;">
+    <div class="auth-box bg-white p-4 border">
+        <h4 class="fw-bold mb-3">Create Account</h4>
+
+        <form action="{%url 'register_seeker' %}" method="POST">
+            {%csrf_token%}
+            
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <label>First Name</label>
+                        {{form.first_name}}
+                    </div>
+                    <div class="col">
+                        <label>Last Name</label>
+                        {{form.last_name}}
+                    </div>  
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Email</label>
+                        {{form.email}}
+                    </div>
+                    <div class="col">
+                        <label>Phone Number</label>
+                        {{form.phone_number}}
+                    </div>  
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Password</label>
+                        {{form.password}}
+                    </div>
+                    <div class="col">
+                        <label>Confirm Password</label>
+                        {{form.confirm_password}}
+                    </div>  
+                </div>
+
+                
+                {{form.email.errors}}
+			    {{form.non_field_errors}}
+            </div>
+
+        
+            <br>
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+            
+        </form>
+        <div class="text-center mt-3 small">
+            Have an Account? <a href="{%url 'login' %}">Login</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
