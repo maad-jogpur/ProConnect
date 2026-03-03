@@ -39,7 +39,7 @@
                                 {% endif %}
                                 <div>
                                     <h6 class="mb-0">{{application.user.first_name}} {{application.user.last_name}}</h6>
-                                    <small class="text-muted">Applied 2 days ago</small>
+                                    <small class="text-muted">Applied {{application.created_at|timesince}} ago</small>
                                 </div>
                             </div>
                         </td>

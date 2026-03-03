@@ -3,31 +3,80 @@
 
 <div class="container mt-5">
     <div class="row">
-
         <div class="col-md-3 mb-4">
-            <div class="card shadow-sm border-0 p-3">
-                <h6 class="fw-bold mb-3"><i class="fas fa-filter me-2"></i>Filters</h6>
+            <div class="card shadow-sm border-0 p-3 sticky-top" style="top: 20px; z-index: 100;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="fw-bold mb-0"><i class="fas fa-filter me-2"></i>Filters</h6>
+                    {% if request.GET.location or request.GET.company or request.GET.sortby%}
+                        <a href="{% url 'jobs' %}" class="text-decoration-none small text-danger fw-bold">Clear All</a>
+                    {% endif %}
+                </div>
                 
+                <div class="filter-section mb-4">
+                    <p class="mb-2 fw-bold small text-uppercase text-muted">Sort By</p>
+                    <div class="list-group list-group-flush">
+                        
+                        <a href="?sortby=recent{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.location %}&location={{ request.GET.location }}{% endif %}{% if request.GET.company %}&company={{ request.GET.company }}{% endif %}" 
+                           class="list-group-item list-group-item-action border-0 px-0 py-2 small {% if request.GET.sortby == 'recent' %} fw-bold text-primary {% endif %}">
+                            <i class="fas fa-chevron-right me-2 smaller"></i>Recent Most
+                        </a>
+
+                        <a href="?sortby=oldest{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.location %}&location={{ request.GET.location }}{% endif %}{% if request.GET.company %}&company={{ request.GET.company }}{% endif %}" 
+                           class="list-group-item list-group-item-action border-0 px-0 py-2 small {% if request.GET.sortby == 'oldest' %} fw-bold text-primary {% endif %}">
+                            <i class="fas fa-chevron-right me-2 smaller"></i>Oldest Most
+                        </a>
+                        
+                        <a href="?sortby=A-Z{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.location %}&location={{ request.GET.location }}{% endif %}{% if request.GET.company %}&company={{ request.GET.company }}{% endif %}" 
+                           class="list-group-item list-group-item-action border-0 px-0 py-2 small {% if request.GET.sortby == 'A-Z' %} fw-bold text-primary {% endif %}">
+                            <i class="fas fa-chevron-right me-2 smaller"></i>A-Z
+                        </a>
+                        
+                        <a href="?sortby=Z-A{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.location %}&location={{ request.GET.location }}{% endif %}{% if request.GET.company %}&company={{ request.GET.company }}{% endif %}" 
+                           class="list-group-item list-group-item-action border-0 px-0 py-2 small {% if request.GET.sortby == 'Z-A' %} fw-bold text-primary {% endif %}">
+                            <i class="fas fa-chevron-right me-2 smaller"></i>Z-A
+                        </a>
+                        
+                    </div>
+                </div>
+
                 <div class="filter-section mb-4">
                     <p class="mb-2 fw-bold small text-uppercase text-muted">Location</p>
                     <div class="list-group list-group-flush">
-                  
                         {% for location in unique_locations %}
-                            <a href="?location={{ location }}" 
+                            <a href="?location={{ location }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.company %}&company={{ request.GET.company }}{% endif %}{% if request.GET.sortby %}&sortby={{ request.GET.sortby }}{% endif %}" 
                                class="list-group-item list-group-item-action border-0 px-0 py-2 small {% if request.GET.location == location %}fw-bold text-primary{% endif %}">
                                 <i class="fas fa-chevron-right me-2 smaller"></i>{{ location }}
                             </a>
                         {% empty %}
                             <p class="text-muted small">No locations found.</p>
                         {% endfor %}
-
                     </div>
-                        <hr class="my-3">
                 </div>
+ 
+                <div class="filter-section mb-4">
+                    <p class="mb-2 fw-bold small text-uppercase text-muted">Companies</p>
+                    <div class="list-group list-group-flush">
+                        
+                        {% for company in unique_companies %}
+                            {% if company %}
+                                <a href="?company={{ company }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.location %}&location={{ request.GET.location }}{% endif %}{% if request.GET.sortby %}&sortby={{ request.GET.sortby }}{% endif %}" 
+                                   class="list-group-item list-group-item-action border-0 px-0 py-2 small {% if request.GET.company == company %}fw-bold text-primary{% endif %}">
+                                    <i class="fas fa-chevron-right me-2 smaller"></i>{{ company }}
+                                </a>
+                            {% endif %}
+                        {% empty %}
+                                <p class="text-muted small">No locations found.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                
             </div>
         </div>
 
         <div class="col-md-9">
+            
+
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h5 class="fw-bold text-dark mb-0">Recommended Jobs</h5>
                 <p class="text-muted small mb-0">Showing {{ jobs.count }} results</p>
@@ -53,17 +102,19 @@
                         </div>
                         
                         <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
-                            <span class="badge rounded-pill border border-info text-info px-3 py-2 small">
+                            <span class="badge rounded-pill border border-primary text-primary px-3 py-2 small">
                                 <i class="far fa-clock me-1"></i>Posted {{ job.created_at|timesince }} ago
                             </span>
-                            <a class="btn btn-primary px-4" href="{% url 'job_detail' job.id %}">View Details</a>
+                            <a class="btn btn-primary px-4 fw-bold shadow-sm" href="{% url 'job_detail' job.id %}">View Details</a>
                         </div>
                     </div>
                 </div>
             {% empty %}
-                <div class="text-center py-5 bg-white border rounded shadow-sm">
+                <div class="text-center py-5 bg-white border-0 shadow-sm rounded-4">
                     <i class="fas fa-search fa-3x text-muted mb-3"></i>
-                    <h5 class="text-muted">No jobs match your criteria.</h5>
+                    <h5 class="text-muted fw-bold">No jobs match your criteria.</h5>
+                    <p class="text-muted small">Try adjusting your filters or search keywords.</p>
+                    <a href="{% url 'jobs' %}" class="btn btn-outline-primary btn-sm mt-2">Reset All Filters</a>
                 </div>
             {% endfor %}
         </div>
@@ -71,12 +122,24 @@
 </div>
 
 <style>
+    /* Professional Job Board Styling */
     .hover-shadow:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+        transform: translateY(-3px);
+        box-shadow: 0 .75rem 1.5rem rgba(0,0,0,.1)!important;
     }
     .transition {
-        transition: all 0.3s ease;
+        transition: all 0.3s ease-in-out;
+    }
+    .smaller {
+        font-size: 0.7rem;
+    }
+    .active-filter {
+        background-color: #f8f9fa;
+        border-radius: 5px;
+    }
+    .list-group-item-action:hover {
+        background-color: #f8f9fa;
+        color: #0d6efd !important;
     }
 </style>
 

@@ -15,7 +15,7 @@ def edit_profile_seeker(request):
         form = SeekerProfileForm(request.POST,request.FILES,instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('seeker_dashboard')
         else:
             return redirect('edit_profile')
     else:
@@ -35,7 +35,7 @@ def edit_profile_recruiter(request):
         form = RecruiterProfileForm(request.POST,request.FILES,instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('recruiter_dashboard')
         else:
             return redirect('edit_profile')
     else:

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Update on your application</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; background-color: #f4f4f4;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; background-color: #ffffff; margin-top: 30px; margin-bottom: 30px; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+        <tr>
+            <td align="center" bgcolor="#dc3545" style="padding: 30px 0;">
+                <h1 style="color: #ffffff; margin: 0; font-size: 22px;">Application Update</h1>
+                <p style="color: #ffffff; margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">ProConnect Job Network</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 40px 30px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="font-size: 18px; font-weight: 600; padding-bottom: 15px;">
+                            Hello {{ application.user.first_name }},
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 16px; line-height: 1.6; color: #555; padding-bottom: 20px;">
+                            Thank you for your interest in the <strong>{{ application.job.title }}</strong> position at <strong>{{ application.job.account.profile.company_name }}</strong>.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 16px; line-height: 1.6; color: #555; padding-bottom: 20px;">
+                            After carefully reviewing your application and qualifications, we regret to inform you that we will not be moving forward with your candidacy at this time. 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 16px; line-height: 1.6; color: #555; padding-bottom: 25px;">
+                            Our decision was difficult, as we received many applications from talented individuals. We appreciate the time and effort you took to apply to our team through ProConnect.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <a href="http://{{ domain }}{% url 'jobs' %}" 
+                               style="background-color: #0a66c2; color: #ffffff; padding: 12px 25px; text-decoration: none; font-size: 15px; font-weight: bold; border-radius: 4px; display: inline-block;">
+                                Explore Other Opportunities
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td bgcolor="#f8f9fa" style="padding: 20px; text-align: center; border-top: 1px solid #eeeeee;">
+                <p style="margin: 0; color: #888; font-size: 12px;">
+                    This is an automated notification from <strong>ProConnect</strong>.<br>
+                    We wish you the best of luck in your job search and future professional endeavors.
+                </p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

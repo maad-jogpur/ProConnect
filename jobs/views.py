@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import Http404
 
 from . models import Job
 from userprofile.models import Profile
@@ -10,38 +11,46 @@ from applications.models import Application
 def jobs(request):
 
     unique_locations = Job.objects.values_list('job_location', flat=True).distinct()
-    
+    unique_companies = Profile.objects.values_list('company_name',flat=True).distinct()
+
+
     jobs = Job.objects.all()
     location_query = request.GET.get('location')
     query = request.GET.get('search')
+    company = request.GET.get('company')
+    sortby_query = request.GET.get('sortby')
+ 
     if location_query:
-        jobs = Job.objects.filter(job_location=location_query)
+        jobs = jobs.filter(job_location=location_query)
 
 
     if query:
-        jobs = Job.objects.filter(Q(title__icontains = query)|Q(description__icontains = query)|Q(requirement__icontains = query))
+        jobs = jobs.filter(Q(title__icontains = query)|Q(description__icontains = query)|Q(requirement__icontains = query)).distinct()
  
-        
+
+    if company:
+        jobs = jobs.filter(account__profile__company_name = company)
+    
+    if sortby_query == "oldest":
+        jobs = jobs.order_by('created_at')
+    elif sortby_query == "recent":
+        jobs = jobs.order_by('-created_at')
+    elif sortby_query == "A-Z":
+        jobs = jobs.order_by('title')
+    elif sortby_query == "Z-A":
+        jobs = jobs.order_by('-title')
+   
+
 
     context = {
         'jobs': jobs,
         'unique_locations': unique_locations,
+        'unique_companies': unique_companies,
+        'query':query
     }
     return render(request, 'jobs.html', context)
 
-def search_jobs(request):
-    query = request.GET.get('search')
 
-    if query:
-        job = Job.objects.filter(Q(title__icontains = query)|Q(description__icontains = query)|Q(requirement__icontains = query))
-    else:
-        job = Job.objects.all()
-
-
-    context = {
-        'job':job
-    }
-    return render(request, 'jobs.html', context)
 
 def job_detail(request,pk):
     try:

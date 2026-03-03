@@ -139,3 +139,10 @@ MESSAGE_TAGS = {
     messages.ERROR: "danger",
     
 }
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # Use 587 for TLS, or 465 for SSL
+EMAIL_USE_TLS = True 
+EMAIL_HOST_USER = 'django.handler@gmail.com' # Your full Gmail address
+EMAIL_HOST_PASSWORD = 'zmvxthlyfdmfvibv' # The generated App Password

@@ -1,29 +1,69 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height:80vh;">
-    <div class="auth-box bg-white p-4 border">
-        <h4 class="fw-bold mb-3">Sign in</h4>
-        <p class="text-muted small">Stay updated on your professional world</p>
+<div class="container d-flex justify-content-center align-items-center" style="min-height:85vh;">
+    <div class="auth-box bg-white p-5 border-0 shadow-lg rounded-4" style="max-width: 420px; width: 100%;">
+        <div class="text-center mb-4">
+            {% include "alerts.html" %}
+            <h3 class="fw-bold text-dark">Welcome Back</h3>
+            <p class="text-muted small">Stay updated on your professional world</p>
+        </div>
 
-        <form action="{%url 'login'%}" method="POST">
-            {%csrf_token%}
-            {%include 'alerts.html'%}
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            
             <div class="mb-3">
-                <label>Email Address</label>
-                <input type="email" name="email" class="form-control" placeholder="Email">
+                <label class="form-label small fw-bold">Email Address</label>
+                <div class="input-group shadow-sm rounded">
+                    <span class="input-group-text bg-white border-end-0"><i class="fas fa-envelope text-muted"></i></span>
+                    <input type="email" name="email" class="form-control border-start-0" placeholder="name@example.com" required>
+                </div>
             </div>
-            <div class="mb-3">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password">
+
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label small fw-bold mb-0">Password</label>
+                    <a href="{% url 'forget_password' %}" class="text-decoration-none small fw-bold text-primary">Forgot password?</a>
+                </div>
+                <div class="input-group shadow-sm rounded mt-2">
+                    <span class="input-group-text bg-white border-end-0"><i class="fas fa-lock text-muted"></i></span>
+                    <input type="password" name="password" class="form-control border-start-0" placeholder="********" required>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Sign in</button>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm transition-hover">
+                Sign In
+            </button>
         </form>
 
-        <div class="text-center mt-3 small">
-            New to ProConnect? <a href="{%url 'register_seeker' %}">Join now</a>
+        <div class="text-center mt-4 border-top pt-3 small">
+            New to ProConnect? <br>
+            <div class="mt-2">
+                <a href="{% url 'register_seeker' %}" class="fw-bold text-decoration-none me-2">Join as Seeker</a>
+                <span class="text-muted">|</span>
+                <a href="{% url 'register_recruiter' %}" class="fw-bold text-decoration-none ms-2">Join as Recruiter</a>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    .auth-box .form-control {
+        font-size: 0.95rem;
+        padding: 0.7rem;
+    }
+    .auth-box .form-control:focus {
+        box-shadow: none;
+        border-color: #dee2e6;
+    }
+    .auth-box .input-group-text {
+        padding-left: 1.2rem;
+        font-size: 0.9rem;
+    }
+    .transition-hover:hover {
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+    }
+</style>
 
 {% endblock %}

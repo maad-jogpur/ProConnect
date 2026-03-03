@@ -1,5 +1,13 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.db.models import Count
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage
+
+
 from . forms import PostJobForm,EditJobForm
 from jobs.models import Job
 from applications.models import Application
@@ -71,7 +79,7 @@ def seeker_dashboard(request):
 
 
 def view_applicants(request,pk):
-    job = Job.objects.get(pk=pk)
+    job = get_object_or_404(Job,pk=pk,account=request.user)
     applications = Application.objects.filter(job=job)
     count = Application.objects.filter(job=job).count()
     context = {
@@ -86,10 +94,38 @@ def select_applicant(request,pk):
     application= Application.objects.get(pk=pk)
     application.status = "Selected"
     application.save()
+    user = application.user
+    current_site = get_current_site(request)
+    subject = "You are selected"
+    message = render_to_string('select_email.html',{
+        'user':request.user,
+        'domain':current_site,
+        'uid':urlsafe_base64_encode(force_bytes(user.id)),
+        'token':default_token_generator.make_token(user),
+        'application':application,
+    })
+    to_email = user.email
+    send_email = EmailMessage(subject,message,to=[to_email])
+    send_email.content_subtype = "html"
+    send_email.send()
     return redirect("view_applicants", pk=application.job.id)
 
 def reject_applicant(request,pk):
     application= Application.objects.get(pk=pk)
     application.status = "Rejected"
     application.save()
+    user = application.user
+    current_site = get_current_site(request)
+    subject = "Please verify your account"
+    message = render_to_string('reject_email.html',{
+        'user':request.user,
+        'domain':current_site,
+        'uid':urlsafe_base64_encode(force_bytes(user.id)),
+        'token':default_token_generator.make_token(user),
+        'application':application,
+    })
+    to_email = user.email
+    send_email = EmailMessage(subject,message,to=[to_email])
+    send_email.content_subtype = "html"
+    send_email.send()
     return redirect("view_applicants", pk=application.job.id)

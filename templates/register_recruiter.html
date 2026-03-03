@@ -1,59 +1,91 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height:80vh;">
-    <div class="auth-box bg-white p-4 border">
-        <h4 class="fw-bold mb-3">Create Account</h4>
+<div class="container d-flex justify-content-center align-items-center" style="min-height:85vh;">
+    <div class="auth-box bg-white p-5 border-0 shadow-lg rounded-4" style="max-width: 500px; width: 100%;">
+        <div class="text-center mb-4">
+             {% include "alerts.html" %}
+            <h3 class="fw-bold text-dark">Hire Top Talent</h3>
+            <p class="text-muted small">Create your recruiter account on ProConnect</p>
+        </div>
 
-        <form action="{%url 'register_recruiter' %}" method="POST">
-            {%csrf_token%}
+        <form action="{% url 'register_recruiter' %}" method="POST">
+            {% csrf_token %}
             
-            <div class="form-group">
-                <div class="row">
-                    <div class="col">
-                        <label>First Name</label>
-                        {{form.first_name}}
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label small fw-bold">First Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0"><i class="fas fa-user text-muted"></i></span>
+                        {{ form.first_name }}
                     </div>
-                    <div class="col">
-                        <label>Last Name</label>
-                        {{form.last_name}}
-                    </div>  
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <label>Email</label>
-                        {{form.email}}
-                    </div>
-                    <div class="col">
-                        <label>Phone Number</label>
-                        {{form.phone_number}}
-                    </div>  
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <label>Password</label>
-                        {{form.password}}
-                    </div>
-                    <div class="col">
-                        <label>Confirm Password</label>
-                        {{form.confirm_password}}
-                    </div>  
-                </div>
-
-                
-                {{form.email.errors}}
-			    {{form.non_field_errors}}
+                <div class="col">
+                    <label class="form-label small fw-bold">Last Name</label>
+                    {{ form.last_name }}
+                </div>  
             </div>
 
-        
-            <br>
-            <button type="submit" class="btn btn-primary w-100">Register</button>
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Email Address</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-envelope text-muted"></i></span>
+                    {{ form.email }}
+                </div>
+                {% if form.email.errors %}
+                    <div class="text-danger x-small mt-1">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Phone Number</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-phone text-muted"></i></span>
+                    {{ form.phone_number }}
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col">
+                    <label class="form-label small fw-bold">Password</label>
+                    {{ form.password }}
+                </div>
+                <div class="col">
+                    <label class="form-label small fw-bold">Confirm</label>
+                    {{ form.confirm_password }}
+                </div>  
+            </div>
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger py-2 small mb-3">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm">
+                Create Recruiter Account
+            </button>
             
         </form>
-        <div class="text-center mt-3 small">
-            Have an Account? <a href="{%url 'login' %}">Login</a>
+
+        <div class="text-center mt-4 border-top pt-3 small">
+            Already have an account? <a href="{% url 'login' %}" class="fw-bold text-decoration-none">Sign in here</a>
         </div>
     </div>
 </div>
+
+<style>
+    /* Ensure the Django form widgets inherit Bootstrap styling */
+    .auth-box .form-control {
+        border-left: none !important;
+        background-color: #f8f9fa;
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+    .auth-box .input-group-text {
+        border-right: none;
+    }
+    .x-small { font-size: 0.75rem; }
+</style>
 
 {% endblock %}
