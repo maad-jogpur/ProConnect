@@ -26,6 +26,16 @@
                 {{recruiter_form.profile_photo}}
             </div>
 
+            <div class="mb-3">
+                <label>First Name</label>
+                {{user_form.first_name}}
+            </div>
+
+            <div class="mb-3">
+                <label>Last Name</label>
+                {{user_form.last_name}}
+            </div>
+
             {% if user.role == 'Job Seeker' %}
                 <div class="mb-3">
                     <label>Skills</label>

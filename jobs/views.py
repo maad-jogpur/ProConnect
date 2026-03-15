@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import Http404
+from django.core.paginator import Paginator
+
 
 from . models import Job
 from userprofile.models import Profile
@@ -15,6 +17,11 @@ def jobs(request):
 
 
     jobs = Job.objects.all()
+    # paginator = Paginator(jobs,2)
+    # page = request.GET.get('page')
+    # paged_jobs = paginator.get_page(page)
+    
+
     location_query = request.GET.get('location')
     query = request.GET.get('search')
     company = request.GET.get('company')
@@ -53,14 +60,22 @@ def jobs(request):
 
 
 def job_detail(request,pk):
+    user = request.user
     try:
         job = Job.objects.get(id=pk)
-        
+        if user.is_authenticated:
+            application = Application.objects.filter(job=job,user = request.user)
+        else:
+            application = Application.objects.filter(job=job)
     except:
         job=None
+        application = None
     
+
+
     context = {
         'job':job,
+        'application':application
         
     }
     return render(request,'job_detail.html',context)

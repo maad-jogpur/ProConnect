@@ -2,7 +2,7 @@ from django.db import models
 from accounts.models import Account
 from jobs.models import Job
 # Create your models here.
-
+ 
 class Application(models.Model):
     STATUS = (
         ('Pending','Pending'),
@@ -17,4 +17,4 @@ class Application(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
-        return f"{self.user} - {self.job}"
+        return f"{self.job} - {self.user} "

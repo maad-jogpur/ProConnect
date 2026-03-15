@@ -1,5 +1,6 @@
 from django import forms
 from . models import Profile
+from accounts.models import Account
 
 class SeekerProfileForm(forms.ModelForm):
     class Meta:
@@ -29,3 +30,13 @@ class RecruiterProfileForm(forms.ModelForm):
         self.fields['profile_photo'].widget.attrs = {'Placeholder':'Upload Profile Picture','class':'form-control'}
         self.fields['company_name'].widget.attrs = {'Placeholder':'Enter Company Name','class':'form-control'}
         self.fields['company_description'].widget.attrs = {'Placeholder':'Enter Company Description','class':'form-control'}
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ('first_name','last_name')
+        
+    def __init__(self,*args,**kwargs):
+        super(UserEditForm,self).__init__(*args,**kwargs)
+        self.fields['first_name'].widget.attrs = {'Placeholder':'First Name','class':'form-control'}
+        self.fields['last_name'].widget.attrs = {'Placeholder':'Last Name','class':'form-control'}

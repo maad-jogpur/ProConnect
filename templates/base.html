@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ProConnect | Professional Job Network</title>
+    <title>HireHub | Professional Job Network</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -24,7 +24,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom fixed-top py-2">
     <div class="container">
         <a class="navbar-brand fw-bold text-primary fs-3" href="{% url 'home' %}">
-            <i class="fas fa-link me-1"></i>ProConnect
+            <i class="fas fa-link me-1"></i>HireHub
         </a>
 
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -34,21 +34,21 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <form action="{% url 'jobs' %}" method="GET" class="d-flex ms-lg-4 my-2 my-lg-0 flex-grow-1" style="max-width: 400px;">
                 <div class="input-group">
-                  <input name="search" class="form-control search-box" type="search" value="{{ query|default_if_none:"" }}" placeholder="Search jobs, skills..." aria-label="Search">
+                  <input name="search" class="form-control search-box" type="search" value="{{ query|default_if_none:"" }}" placeholder="Search jobs, skills..." aria-label="Search" required>
                   <button type="submit" class="btn bg-light border-0 rounded-0">
-                      <i class="fas fa-search text-muted"></i>
+                      <i class="fas fa-search"></i>
                   </button>
                 </div>
             </form>
 
             <ul class="navbar-nav ms-auto align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link px-3 {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">
+                    <a class="nav-link px-3" href="{% url 'home' %}">
                         <i class="fas fa-home d-lg-none me-2"></i>Home
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-3 {% if request.resolver_match.url_name == 'jobs' %}active{% endif %}" href="{% url 'jobs' %}">
+                    <a class="nav-link px-3" href="{% url 'jobs' %}">
                         <i class="fas fa-briefcase d-lg-none me-2"></i>Jobs
                     </a>
                 </li>
@@ -100,7 +100,7 @@
 
 <footer class="bg-white border-top py-4 mt-5">
     <div class="container text-center text-muted small">
-        &copy; 2026 ProConnect. Built for Professional Growth.
+        &copy; 2026 HireHub. Built for Professional Growth.
     </div>
 </footer>
 

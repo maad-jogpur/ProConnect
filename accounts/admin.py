@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from . models import Account
 # Register your models here.
 class AccountAdmin(UserAdmin):
-    list_display = ('email','role','last_login')
+    list_display = ('email','first_name','last_name','role','last_login')
     filter_horizontal = ()
     list_filter = ()
     fieldsets = ()

@@ -40,9 +40,20 @@
                 <div class="mt-4 pt-3 border-top">
                     {% if user.is_authenticated %}
                         {% if user.role == 'Job Seeker' %}
-                            <a href="{% url 'apply_job' job.id %}" class="btn btn-primary btn-lg px-5 shadow-sm">
-                                <i class="fas fa-paper-plane me-2"></i>Apply Now
-                            </a>
+                            {% if application %}
+                                 <a href="{% url 'apply_job' job.id %}" class="btn btn-primary btn-lg px-5 shadow-sm disabled">
+                                    <i class="fas fa-paper-plane me-2"></i>Apply Now
+                                </a>
+                                <br>
+                                <br>
+                                <div class="alert alert-warning border-0 shadow-sm d-inline-block">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>You have already applied for this job!
+                                </div>
+                            {% else %}
+                                <a href="{% url 'apply_job' job.id %}" class="btn btn-primary btn-lg px-5 shadow-sm">
+                                    <i class="fas fa-paper-plane me-2"></i>Apply Now
+                                </a>
+                            {% endif %}
                         {% else %}
                             <div class="alert alert-warning border-0 shadow-sm d-inline-block">
                                 <i class="fas fa-exclamation-triangle me-2"></i>You are logged in as a <strong>Recruiter</strong>. Recruiters cannot apply for jobs.

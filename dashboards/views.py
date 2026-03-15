@@ -116,7 +116,7 @@ def reject_applicant(request,pk):
     application.save()
     user = application.user
     current_site = get_current_site(request)
-    subject = "Please verify your account"
+    subject = "Application Update"
     message = render_to_string('reject_email.html',{
         'user':request.user,
         'domain':current_site,
